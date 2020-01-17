@@ -123,6 +123,17 @@ coverage installed in your virtualenv (``pip install coverage``) then run::
 
 
 ---------------------------------
+To create package
+---------------------------------
+
+To create a source and wheel distribution::
+
+  python setup.py sdist bdist_wheel
+
+The artifacts are placed in ``dist/``.
+
+
+---------------------------------
 Setup dev instance of nbviewer
 ---------------------------------
 
@@ -132,7 +143,7 @@ Run nbviewer as a Docker container::
 
     docker run --network="host" \
       -p 8080:8080 \
-      -v /home/mark/src/europalabs/nbviewer_templates:/data/nbviewer_templates \
+      -v <path-to-project-root>/nbviewer_templates:/data/nbviewer_templates \
       -e 'NBVIEWER_TEMPLATE_PATH=/data/nbviewer_templates' \
       jupyter/nbviewer
 
