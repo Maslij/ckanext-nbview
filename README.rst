@@ -31,16 +31,19 @@ ckanext-nbview
 A CKAN Resource View plugin to display a read-only view of a Jupyter Notebook.
 
 **Create Notebook View**
+
 .. image:: docs/images/create_notebook_view.png
    :width: 700
    :alt: Create Notebook View
 
 **Edit Notebook View**
+
 .. image:: docs/images/edit_notebook_view.png
    :width: 700
    :alt: Edit Notebook View
 
 **Show Notebook View**
+
 .. image:: docs/images/show_notebook_view.png
    :width: 700
    :alt: Show Notebook View
