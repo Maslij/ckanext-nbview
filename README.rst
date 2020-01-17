@@ -1,47 +1,46 @@
-.. You should enable this project on travis-ci.org and coveralls.io to make
-   these badges work. The necessary Travis and Coverage config files have been
-   generated for you.
-
 .. image:: https://travis-ci.org/markmo/ckanext-nbview.svg?branch=master
-    :target: https://travis-ci.org/markmo/ckanext-nbview
+  :target: https://travis-ci.org/markmo/ckanext-nbview
 
 .. image:: https://coveralls.io/repos/markmo/ckanext-nbview/badge.svg
   :target: https://coveralls.io/r/markmo/ckanext-nbview
 
-.. image:: https://pypip.in/download/ckanext-nbview/badge.svg
-    :target: https://pypi.python.org/pypi//ckanext-nbview/
-    :alt: Downloads
+..  .. image:: https://pypip.in/download/ckanext-nbview/badge.svg
+        :target: https://pypi.python.org/pypi//ckanext-nbview/
+        :alt: Downloads
 
-.. image:: https://pypip.in/version/ckanext-nbview/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-nbview/
-    :alt: Latest Version
+..  .. image:: https://pypip.in/version/ckanext-nbview/badge.svg
+        :target: https://pypi.python.org/pypi/ckanext-nbview/
+        :alt: Latest Version
 
-.. image:: https://pypip.in/py_versions/ckanext-nbview/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-nbview/
-    :alt: Supported Python versions
+..  .. image:: https://pypip.in/py_versions/ckanext-nbview/badge.svg
+        :target: https://pypi.python.org/pypi/ckanext-nbview/
+        :alt: Supported Python versions
 
-.. image:: https://pypip.in/status/ckanext-nbview/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-nbview/
-    :alt: Development Status
+..  .. image:: https://pypip.in/status/ckanext-nbview/badge.svg
+        :target: https://pypi.python.org/pypi/ckanext-nbview/
+        :alt: Development Status
 
-.. image:: https://pypip.in/license/ckanext-nbview/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-nbview/
-    :alt: License
+..  .. image:: https://pypip.in/license/ckanext-nbview/badge.svg
+        :target: https://pypi.python.org/pypi/ckanext-nbview/
+        :alt: License
 
 =============
 ckanext-nbview
 =============
 
-.. A CKAN Resource View plugin to display a read-only view of a Jupyter Notebook.
+A CKAN Resource View plugin to display a read-only view of a Jupyter Notebook.
 
+**Create Notebook View**
 .. image:: docs/images/create_notebook_view.png
    :width: 700
    :alt: Create Notebook View
 
+**Edit Notebook View**
 .. image:: docs/images/edit_notebook_view.png
    :width: 700
    :alt: Edit Notebook View
 
+**Show Notebook View**
 .. image:: docs/images/show_notebook_view.png
    :width: 700
    :alt: Show Notebook View
@@ -69,8 +68,7 @@ To install ckanext-nbview:
      pip install ckanext-nbview
 
 3. Add ``nbview`` to the ``ckan.plugins`` setting in your CKAN
-   config file (by default the config file is loc    # (optional, default: 24).
-ated at
+   config file (by default the config file is located at
    ``/etc/ckan/default/production.ini``).
 
 4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu::
@@ -86,8 +84,8 @@ ated at
 Config Settings
 ---------------
 
-The following config setting is required, e.g. in '/etc/ckan/default/development.ini'
-under '[app:main]':
+The following config setting is required, e.g. in ``/etc/ckan/default/development.ini``
+under ``[app:main]``::
 
     # The nbviewer service url, just scheme, host and port. Leave off 
     # the trailing slash.
@@ -122,32 +120,39 @@ coverage installed in your virtualenv (``pip install coverage``) then run::
 
 
 ---------------------------------
-Registering ckanext-nbview on Azure Artifacts
+Setup dev instance of nbviewer
 ---------------------------------
 
-ckanext-nbview should be availabe on Azure Artifacts as
-https://pypi.python.org/pypi/ckanext-nbview. If that link doesn't work, then
-you can register the project on PyPI for the first time by following these
-steps:
+Run nbviewer as a Docker container::
 
-1. Create a source distribution of the project::
+    docker pull jupyter/nbviewer
 
-     python setup.py sdist
+    docker run --network="host" \
+      -p 8080:8080 \
+      -v /home/mark/src/europalabs/nbviewer_templates:/data/nbviewer_templates \
+      -e 'NBVIEWER_TEMPLATE_PATH=/data/nbviewer_templates' \
+      jupyter/nbviewer
 
-2. Register the project::
+``--network="host"`` means that references to ‘localhost’ in the container 
+refer to the host.
 
-     python setup.py register
+We can override templates in nbviewer by putting jinja2 templates into the 
+directory at ``NBVIEWER_TEMPLATE_PATH``, which can be on the host and mapped 
+to a volume in the container.
 
-3. Upload the source distribution to PyPI::
+We override the ``layout.html`` template to remove the navbar and show just 
+the notebook.
 
-     python setup.py sdist upload
+See https://learning.oreilly.com/videos/advanced-jupyter-notebook/9781771375665/9781771375665-video239340
 
-4. Tag the first release of the project on GitHub with the version number from
-   the ``setup.py`` file. For example if the version number in ``setup.py`` is
-   0.0.1 then do::
 
-       git tag 0.0.1
-       git push --tags
+---------------------------------
+Install from this GitHub Repo
+---------------------------------
+
+ckanext-nbview can be installed using::
+
+  pip install git+https://github.com/markmo/ckanext-nbview#egg=ckanext-nbview
 
 
 ----------------------------------------
