@@ -46,8 +46,16 @@ class NbviewPlugin(plugins.SingletonPlugin):
     def can_view(self, data_dict):
         supported_formats = ['ipynb']
         try:
-            return data_dict['resource'].get('format', '').lower() in supported_formats
-        except:
+            resource = toolkit.get_or_bust(data_dict, 'resource')
+            name, ext = os.path.splitext(resource.get('name', ''))
+            ext = ext[1:].lower() if ext else ''
+            log.debug("ext: '{}'".format(ext))
+            result = (ext in supported_formats)
+            log.debug('can_view? ' + str(result))
+            return result
+        except Exception as e:
+            log.debug('Error: ' + str(e))
+            log.debug('can_view? False')
             return False
 
     def view_template(self, context, data_dict):
