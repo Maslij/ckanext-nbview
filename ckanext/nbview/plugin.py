@@ -4,12 +4,7 @@ import ckan.plugins.toolkit as toolkit
 
 
 def nbviewer_host():
-    '''Get nbviewer_host from the [app:main] section of your CKAN config file.'''
-    host = config.get('ckan.nbview.nbviewer_host', 'http://localhost:8080');
-    if (host.endswith('/')):
-        host = host[:-1]
-    
-    return host
+    return config.get('ckanext.nbview.nbviewer_host', '').strip('/')
 
 
 class NbviewPlugin(plugins.SingletonPlugin):
